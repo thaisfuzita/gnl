@@ -6,7 +6,7 @@
 /*   By: tjulya-c <tjulya-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/30 13:37:05 by tjulya-c          #+#    #+#             */
-/*   Updated: 2026/06/30 16:57:33 by tjulya-c         ###   ########.fr       */
+/*   Updated: 2026/07/01 17:06:44 by tjulya-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	string[i] = '\0';
 	return (string);
-}
-
-void	*ft_calloc(size_t nmemb, size_t size)
-{
-	unsigned char	*x;
-	size_t			max;
-
-	max = -1;
-	if (nmemb != 0 && size > max / nmemb)
-		return (NULL);
-	x = malloc(nmemb * size);
-	if (!x)
-		return (NULL);
-	ft_bzero(x, nmemb * size);
-	return (x);
 }
 
 char	*ft_strchr(const char *s, int c)
