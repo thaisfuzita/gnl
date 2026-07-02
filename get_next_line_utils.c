@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjulya-c <tjulya-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thaisfuzita <thaisfuzita@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/30 13:37:05 by tjulya-c          #+#    #+#             */
-/*   Updated: 2026/07/01 17:06:44 by tjulya-c         ###   ########.fr       */
+/*   Updated: 2026/07/01 23:06:37 by thaisfuzita      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,27 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	string[i] = '\0';
 	return (string);
+}
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	unsigned char	*x;
+	size_t			max;
+	size_t			i;
+
+	max = -1;
+	if (nmemb != 0 && size > max / nmemb)
+		return (NULL);
+	x = malloc(nmemb * size);
+	if (!x)
+		return (NULL);
+	i = 0;
+	while (i < nmemb * size)
+	{
+		x[i] = 0;
+		i++;
+	}
+	return (x);
 }
 
 char	*ft_strchr(const char *s, int c)

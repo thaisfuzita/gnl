@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjulya-c <tjulya-c@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thaisfuzita <thaisfuzita@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/30 13:37:12 by tjulya-c          #+#    #+#             */
-/*   Updated: 2026/07/01 17:09:10 by tjulya-c         ###   ########.fr       */
+/*   Updated: 2026/07/01 23:03:13 by thaisfuzita      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,31 +18,25 @@ static char	*read_file(char *remainder, int fd)
 	char	*temp;
 	int		bytes;
 
-	bytes = 1;
-	reading = malloc(BUFFER_SIZE + 1 * sizeof(char));
+	reading = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!reading)
-	{
-		free(remainder);
-		return (NULL);
-	}
+		return (free(remainder), NULL);
+	bytes = 1;
 	while (bytes != 0 && !ft_strchr(remainder, '\n'))
 	{
 		bytes = read(fd, reading, BUFFER_SIZE);
 		if (bytes < 0)
-		{
-			free (reading);
-			free (remainder);
-			return (NULL);
-		}
+			return (free(reading), free(remainder), NULL);
 		reading[bytes] = '\0';
 		temp = ft_strjoin(remainder, reading);
 		free(remainder);
+		if (!temp)
+			return (free(reading), NULL);
 		remainder = temp;
 	}
 	free (reading);
 	return (remainder);
 }
-
 static char	*get_line(char *remainder)
 {
 	int		i;
@@ -71,15 +65,11 @@ static char	*update_remainder(char *remainder)
 	while (remainder[i] != '\n' && remainder[i] != '\0')
 		i++;
 	if (remainder[i] == '\0')
-	{
-		free(remainder);
-		return (NULL);
-	}
-	rest = ft_substr(remainder, i + 1, len - i);
+		return (free(remainder), NULL);
+	rest = ft_substr(remainder, i + 1, len - i - 1);
 	free(remainder);
 	return (rest);
 }
-
 char	*get_next_line(int fd)
 {
 	char		*line;
@@ -89,7 +79,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (!remainder)
 	{
-		remainder = malloc(1 * sizeof(char));
+		remainder = ft_calloc(1, sizeof(char));
 		if (!remainder)
 			return (NULL);
 	}
