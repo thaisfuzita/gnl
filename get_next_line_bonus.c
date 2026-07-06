@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjulya-c <tjulya-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/30 13:37:12 by tjulya-c          #+#    #+#             */
-/*   Updated: 2026/07/02 11:49:01 by tjulya-c         ###   ########.fr       */
+/*   Created: 2026/07/02 11:49:06 by tjulya-c          #+#    #+#             */
+/*   Updated: 2026/07/02 12:00:45 by tjulya-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*read_file(char *remainder, int fd)
 {
@@ -75,20 +75,20 @@ static char	*update_remainder(char *remainder)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*remainder;
+	static char	*remainder[FD_MAX];
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= FD_MAX)
 		return (NULL);
-	if (!remainder)
+	if (!remainder[fd])
 	{
-		remainder = ft_calloc(1, sizeof(char));
-		if (!remainder)
+		remainder[fd] = ft_calloc(1, sizeof(char));
+		if (!remainder[fd])
 			return (NULL);
 	}
-	remainder = read_file(remainder, fd);
-	if (!remainder)
+	remainder[fd] = read_file(remainder[fd], fd);
+	if (!remainder[fd])
 		return (NULL);
-	line = get_line(remainder);
-	remainder = update_remainder(remainder);
+	line = get_line(remainder[fd]);
+	remainder[fd] = update_remainder(remainder[fd]);
 	return (line);
 }
